@@ -1,0 +1,71 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/icons": "^5.1.2",
+    "@emotion/styled": "^11.11.0",
+    "@heroicons/react": "^2.0.18",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.131",
+    "@mui/material": "^5.13.0",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@zegocloud/zego-uikit-prebuilt": "^1.8.5",
+    "autolinker": "^4.0.0",
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "firebase": "^9.22.1",
+    "formik": "^2.2.9",
+    "link-preview-js": "^3.0.4",
+    "link-preview-js-author": "^3.0.4",
+    "moment": "^2.29.4",
+    "react": "^18.2.0",
+    "react-chat-engine": "^1.11.28",
+    "react-chat-engine-advanced": "^0.1.28",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-firebase-hooks": "^5.1.1",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-lazy-load-image-component": "^1.6.0",
+    "react-linkify": "^1.0.0-alpha",
+    "react-paginate": "^8.2.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.13.0",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.3",
+    "redux-persist": "^6.0.0",
+    "sass": "^1.62.1",
+    "socket.io-client": "^4.6.1",
+    "sweetalert2": "^11.7.12",
+    "twilio": "^4.11.2",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

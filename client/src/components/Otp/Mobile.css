@@ -1,0 +1,14 @@
+.form-control {
+  background-color: rgb(226, 224, 224);
+  color: white;
+  width: 50%;
+  margin: 50px auto;
+  padding: 100px 50px;
+  border-radius: 30px;
+}
+
+@media (max-width: 500px) {
+  .form-control {
+    width: 90%;
+  }
+}
