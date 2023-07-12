@@ -1,4 +1,4 @@
-export const baseUrl = "http://localhost:3001/";
+export const baseUrl = "https://shoehub.ml/";
 export const loginPost = "/admin/login";
 export const signUpPost = "/admin/signUp";
 export const getAllUsers = "/admin/getAllUsers";

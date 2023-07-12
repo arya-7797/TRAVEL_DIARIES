@@ -1,18 +1,20 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "scenes/navbar";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
+import { setLogout } from "state";
 import { baseUrl } from "utils/constants";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
   const token = useSelector((state) => state.token);
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const [activeTab, setActiveTab] = useState("posts");
@@ -23,8 +25,10 @@ const ProfilePage = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
+      console.log('user data ',data)
       setUser(data);
     } catch (error) {
+      dispatch(setLogout())
       console.log("pp pp  ", error);
     }
   };

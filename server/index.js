@@ -19,6 +19,7 @@ import User from "./models/User.js";
 import Post from "./models/Post.js";
 import { users, posts } from "./data/index.js";
 import chatRoute from "./routes/chat.js";
+import notificationRoutes from './routes/notification.js'
 
 // CONFIGURATIONS
 
@@ -30,11 +31,13 @@ app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));    
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-
+app.use(cors({
+  origin: ['https://shoehub.ml', 'http://localhost:3000','http://localhost:3001','http://localhost:3002']
+}));
 //  FILE STORAGE
 
 const storage = multer.diskStorage({
@@ -45,7 +48,12 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-const upload = multer({ storage });
+const upload = multer({ 
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 10, // 10MB limit
+  }
+ });
 
 //ROUTES WITH FILES
 
@@ -61,6 +69,7 @@ app.use("/posts", postRoutes);
 app.use("/admin", adminRoutes);
 app.use("/authAdmin", adminRoutes);
 app.use("/chat", chatRoute);
+app.use("/notification", notificationRoutes);
 
 //MONGOOSE SETUP
 

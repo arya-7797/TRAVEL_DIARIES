@@ -4,9 +4,9 @@ import {verifyToken} from "../middleware/auth.js";
 const router =express.Router();
 
 router.post('/login',adminLogin)
-router.get('/getAllUsers',getAllUsers)
-router.patch("/block/:id",blockUsers);
-router.patch("/unblock/:id",unblockUsers);
-router.get('/getAllReports',getAllReports);
-router.patch(`/post/:postId`,unlistPost)
+router.get('/getAllUsers', verifyToken,getAllUsers)
+router.patch("/block/:id", verifyToken,blockUsers);
+router.patch("/unblock/:id", verifyToken,unblockUsers);
+router.get('/getAllReports', verifyToken,getAllReports);
+router.patch(`/post/:postId`, verifyToken,unlistPost)
 export default router;

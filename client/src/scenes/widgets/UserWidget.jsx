@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditProfile from "../profilePage/EditProfile";
+import { baseUrl } from "utils/constants";
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
@@ -39,7 +40,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
   const getUser = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/users/${userId}`, {
+      const response = await fetch(`${baseUrl}users/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });

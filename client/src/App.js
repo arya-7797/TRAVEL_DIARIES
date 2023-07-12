@@ -20,6 +20,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import { useState } from "react";
+import GoogleMapApp from "components/GoogleMap/googleMap";
 
 function App() {
   const [mobile, setMobile] = useState(true);
@@ -62,6 +63,7 @@ function App() {
               <Route path="/otp" element={<Otp userNumber={userNumber} />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/room/:roomId" element={<RoomPage />} />
+              <Route path="/googlemap" element={ <GoogleMapApp /> } />
             </Route>
           </Routes>
         </ThemeProvider>

@@ -23,6 +23,7 @@ import {
   Help,
   Menu,
   Close,
+  Directions
 } from "@mui/icons-material";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -122,6 +123,7 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
+          
 
           <Link to="/chat">
             <People sx={{ fontSize: "25px" }} />
@@ -131,7 +133,12 @@ const Navbar = () => {
             <Notifications sx={{ fontSize: "25px" }} />
           </Link>
 
-          <Help sx={{ fontSize: "25px" }} />
+           <Link to="/googlemap">
+          <Directions sx={{ fontSize: "25px" }} />
+          </Link>
+
+
+
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
@@ -206,7 +213,8 @@ const Navbar = () => {
             </IconButton>
             <Message sx={{ fontSize: "25px" }} />
             <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
+          
+            <Directions sx={{ fontSize: "25px" }} />
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}

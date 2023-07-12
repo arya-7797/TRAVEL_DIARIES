@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setPosts } from "../../Redux/store";
@@ -14,20 +13,26 @@ function PostSingleCard({ post, index }) {
   const token = useSelector((state) => state.token);
 
   const getAllPosts = () => {
-    axios
-      .get("posts/posts", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        dispatch(setPosts({ posts: response.data }));
-      })
-      .catch((error) => {
-        console.log("inside catch");
-        console.log(error);
-      });
+    try {
+
+      axios
+        .get("posts/posts", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          dispatch(setPosts({ posts: response.data }));
+        })
+        .catch((error) => {
+          console.log("inside catch");
+          console.log(error);
+        });
+            
+    } catch (error) {
+      
+    }
   };
 
   const deletePost = () => {
@@ -43,7 +48,7 @@ function PostSingleCard({ post, index }) {
       if (result.isConfirmed) {
         try {
           const response = await fetch(
-            `http://localhost:3001/posts/${post._id}`,
+            `${baseUrl}posts/${post._id}`,
             {
               method: "DELETE",
               headers: {

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import axios from "utils/axios";
@@ -7,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 import "./Mobile.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormContainer = styled("div")(({ theme }) => ({}));
 
@@ -19,12 +22,17 @@ function Mobile() {
   const navigate = useNavigate();
   const [number, setNumber] = useState("");
   const [otp, setOtp] = useState("");
+  const [counter, setCounter] = useState(59);
+  const [isNumberSubmitted, setIsNumberSubmitted] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     axios.post(`users/mobile`, { number }).then((res) => {
       if (res.data) {
+        toast.success("Your OTP has been sent.");
         console.log(res.data.to);
+        setIsNumberSubmitted(true);
+        setCounter(59);
       }
     });
   };
@@ -50,8 +58,18 @@ function Mobile() {
     setOtp(event.target.value);
   };
 
+  
+  const handleResendClick = () => {
+   
+    setCounter(59); 
+  };
+  useEffect(() => {
+    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [isNumberSubmitted,counter]);
+
   return (
-    <>
+    <>  <ToastContainer autoClose={1300} /> 
       <FormContainer className="form-control shadow-lg">
         <Form noValidate onSubmit={handleSubmit}>
           <TextField
@@ -67,6 +85,8 @@ function Mobile() {
             value={number}
             onChange={handleChange}
           />
+         
+
           <SubmitButton
             type="submit"
             fullWidth
@@ -77,6 +97,8 @@ function Mobile() {
             Submit Number
           </SubmitButton>
         </Form>
+
+
         <Form noValidate onSubmit={handleOtpSubmit}>
           <TextField
             variant="outlined"
@@ -90,6 +112,14 @@ function Mobile() {
             value={otp}
             onChange={handleOtpChange}
           />
+            {isNumberSubmitted ? (
+            counter > 0 ? (
+              <p>Resend OTP in {counter} seconds</p>
+            ) : (
+              <button onClick={handleResendClick}>Resend OTP</button>
+            )
+          ) : null}
+
           <SubmitButton
             type="submit"
             className="py-2"

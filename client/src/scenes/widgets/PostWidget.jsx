@@ -11,7 +11,7 @@ import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useState } from "react";
+import { useState } from "react"; 
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
 import EditPost from "./EditPost";
@@ -78,16 +78,20 @@ const PostWidget = ({
   };
 
   const patchLike = async () => {
-    const response = await fetch(`${baseUrl}posts/${postId}/like`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId: loggedInUserId }),
-    });
-    const updatedPost = await response.json();
-    dispatch(setPost({ post: updatedPost }));
+    try{
+      const response = await fetch(`${baseUrl}posts/${postId}/like`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: loggedInUserId }),
+      });
+      const updatedPost = await response.json();
+      dispatch(setPost({ post: updatedPost }));
+    }catch(error){
+      console.log('like error ',error);
+    }
   };
 
   const handleReport = async (optionText) => {

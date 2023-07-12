@@ -8,38 +8,45 @@ import {
 } from "../controllers/users.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
-import { verifyToken } from "../middleware/auth.js";
+import { verifyBlock, verifyToken } from "../middleware/auth.js";
 import twilio from "twilio";
 const router = express.Router();
-const serviceSID = "VA29b37172960d4216b9b14bbd3ec14d09";
-const accountSID = "ACff486d293ae9628f717e4712903f1e2f";
-const authToken = "ae53f7d0bb6b95df73f3f5ac37582b20";
+import dotenv from 'dotenv';
+dotenv.config();
+const accountSID = process.env.ACCOUNTSID;
+const authToken = process.env.AUTHTOKEN;
+const serviceSID = process.env.SERVICESID;
 const client = twilio(accountSID, authToken);
 
-router.get("/:id", verifyToken, getUser);
+router.get("/:id", verifyToken, verifyBlock, getUser);
 router.patch("/:id/editProfile", verifyToken, editProfile);
 router.get("/:id/friends", verifyToken, getUserFriends);
 router.patch("/:id/:friendId", verifyToken, addRemoveFriend);
 
 router.post("/mobile", async (req, res) => {
-  const { phoneNumber } = req.body;
-  const user = await User.findOne({ phoneNumber: phoneNumber });
-  if (user) {
-    client.verify.v2
-      .services(serviceSID)
-      .verifications.create({
-        to: `+91${req.body.number}`,
-        channel: "sms",
-      })
-      .then((resp) => {
-        res.status(200).json(resp);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" });
-      });
-  } else {
-    res.status(404).json({ error: "User not found" });
+  try{
+    const { phoneNumber } = req.body;
+    const user = await User.findOne({ phoneNumber: phoneNumber });
+    if (user) {
+      client.verify.v2
+        .services(serviceSID)
+        .verifications.create({
+          to: `+91${req.body.number}`,
+          channel: "sms",
+        })
+        .then((resp) => {
+          res.status(200).json(resp);
+        })
+        .catch((error) => {
+          console.error('39 => ',error);
+          res.status(500).json({ error: "Internal server error" });
+        });
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  
+  }catch(error){
+    console.log('erroror ',error) 
   }
 });
 

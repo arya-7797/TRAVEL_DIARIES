@@ -88,12 +88,15 @@ export const likePost = async (req, res) => {
       { new: true }
     );
     if (post.userId !== userId && !isLiked) {
+      const user = await User.findById(userId);
+      const username = `${user.firstName} ${user.lastName}`;
+
       const notification = new NotificationModel({
         type: "like",
         postId: Object(post._id),
         notificationFor: Object(post.userId),
         notificationBy: Object(userId),
-        notificationMessage: "liked your post",
+        notificationMessage: `${username} liked your post`,
       });
       await notification.save();
     }
@@ -205,12 +208,15 @@ export const createComment = async (req, res) => {
     });
 
     if (post.author != userId) {
+       const user= await User.findById(userId);
+       const username=`${user.firstName} ${user.lastName}`
+
       const notification = new NotificationModel({
         type: "comments",
         postId: post._id,
         notificationFor: post.userId,
         notificationBy: userId,
-        notificationMessage: "Someone commented on your post.",
+        notificationMessage: `${username} commented on your post`,
       });
       await notification.save();
     }
