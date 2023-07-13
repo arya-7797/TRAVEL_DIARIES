@@ -5,18 +5,20 @@ import User from "../models/User.js";
 dotenv.config();
 export const verifyToken = async (req, res, next) => {
   try {
+    console.log('token ',token);
     let token = req.header("Authorization");
     if (!token) {
-      return res.status(405).send("Access Denied");
+      return res.status(405).send("Access Denied invalid token");
     }
     if (token.startsWith("Bearer ")) {
       token = token.slice(7, token.length).trimLeft();
     }
     const verified = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('verii ',verified)
     req.user = verified;
     next();
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message+', token verification error' });
   }
 };
 
